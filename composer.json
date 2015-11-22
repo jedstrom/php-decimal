@@ -1,0 +1,11 @@
+{
+    "name": "jedstrom/php-decimal",
+    "description": "PHP Decimal Type implementation",
+    "authors": [
+        {
+            "name": "Jake Edstrom",
+            "email": "jake@edstrommn.net"
+        }
+    ],
+    "require": {}
+}
