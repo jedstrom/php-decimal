@@ -70,4 +70,15 @@ class Decimal
     {
         return bccomp($this->getValue(), $candidate->getValue()) < 0;
     }
+
+    /**
+     * Convenience method, returns true if $candidate is greater than or equal to current value
+     *
+     * @param Decimal $candidate
+     * @return bool
+     */
+    public function greaterThanOrEqual(Decimal $candidate)
+    {
+        return $this->greaterThan($candidate) || $this->equals($candidate);
+    }
 }
