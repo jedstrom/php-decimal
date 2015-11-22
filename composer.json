@@ -7,5 +7,10 @@
             "email": "jake@edstrommn.net"
         }
     ],
-    "require": {}
+    "autoload": {
+        "psr-4": {
+            "Jedstrom\\": "src/"
+        }
+    },
+    "require": {},
 }
