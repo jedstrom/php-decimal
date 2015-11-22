@@ -59,4 +59,15 @@ class Decimal
     {
         return bccomp($this->getValue(), $candidate->getValue()) > 0;
     }
+
+    /**
+     * Returns true if $candidate is greater than the current value
+     *
+     * @param Decimal $candidate
+     * @return bool
+     */
+    public function lessThan(Decimal $candidate)
+    {
+        return bccomp($this->getValue(), $candidate->getValue()) < 0;
+    }
 }
