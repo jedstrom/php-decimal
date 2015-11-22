@@ -15,4 +15,12 @@ class DecimalTest extends PHPUnit_Framework_TestCase
         $decimal = new Decimal('1.50', 2);
         $this->assertFalse($decimal->equals(new Decimal('4.00', 3)));
     }
+
+    public function testGreaterThanComparison()
+    {
+        $decimal = new Decimal('5.00', 2);
+        $this->assertTrue($decimal->greaterThan(new Decimal('2.50', 2)));
+        $this->assertFalse($decimal->greaterThan(new Decimal('7.00', 2)));
+        $this->assertFalse($decimal->greaterThan(new Decimal('5.00', 2)));
+    }
 }
