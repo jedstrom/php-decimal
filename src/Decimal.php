@@ -81,4 +81,15 @@ class Decimal
     {
         return $this->greaterThan($candidate) || $this->equals($candidate);
     }
+
+    /**
+     * Convenience method, returns true if $candidate is less than or equal to current value
+     *
+     * @param Decimal $candidate
+     * @return bool
+     */
+    public function lessThanOrEqual(Decimal $candidate)
+    {
+        return $this->lessThan($candidate) || $this->equals($candidate);
+    }
 }

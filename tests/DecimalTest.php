@@ -40,4 +40,13 @@ class DecimalTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($decimal->greaterThanOrEqual(new Decimal('5.01', 2)));
         $this->assertFalse($decimal->greaterThanOrEqual(new Decimal('100.00', 2)));
     }
+
+    public function testLessThanOrEqual()
+    {
+        $decimal = new Decimal('5.00', 2);
+        $this->assertTrue($decimal->lessThanOrEqual(new Decimal('5.00', 2)));
+        $this->assertTrue($decimal->lessThanOrEqual(new Decimal('5.00', 2)));
+        $this->assertFalse($decimal->lessThanOrEqual(new Decimal('4.99', 2)));
+        $this->assertFalse($decimal->lessThanOrEqual(new Decimal('1.00', 2)));
+    }
 }
