@@ -46,7 +46,7 @@ class Decimal
      */
     public function equals(Decimal $candidate)
     {
-        return $this->getValue() === $candidate->getValue();
+        return 0 === bccomp($this->getValue(), $candidate->getValue(), $this->getPrecision());
     }
 
     /**
