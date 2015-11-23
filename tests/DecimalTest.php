@@ -43,4 +43,18 @@ class DecimalTest extends PHPUnit_Framework_TestCase
         $this->assertFalse($decimal->lessThanOrEqual(new Decimal('4.99', 2)));
         $this->assertFalse($decimal->lessThanOrEqual(new Decimal('1.00', 2)));
     }
+
+    public function testMultiplication()
+    {
+        $termOne = new Decimal('2', 0);
+        $termTwo = new Decimal('3', 0);
+        $product = new Decimal('6', 0);
+
+        $this->assertTrue($termOne->multiply($termTwo)->equals($product));
+
+        $termTwo = new Decimal('-1');
+        $product = new Decimal('-2');
+
+        $this->assertTrue($termOne->multiply($termTwo)->equals($product));
+    }
 }

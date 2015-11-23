@@ -92,4 +92,16 @@ class Decimal
     {
         return $this->lessThan($candidate) || $this->equals($candidate);
     }
+
+    /**
+     * @param Decimal $multiplier
+     * @return Decimal
+     */
+    public function multiply(Decimal $multiplier)
+    {
+        return new Decimal(
+            bcmul($this->getValue(), $multiplier->getValue(), $this->getPrecision()),
+            $this->getPrecision()
+        );
+    }
 }
