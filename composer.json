@@ -12,5 +12,7 @@
             "Jedstrom\\": "src/"
         }
     },
-    "require": {},
+    "require": {
+        "ext-bcmath": "*"
+    },
 }
