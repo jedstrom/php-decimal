@@ -46,7 +46,16 @@ class Decimal
      */
     public function equals(Decimal $candidate)
     {
-        return 0 === bccomp($this->getValue(), $candidate->getValue(), $this->getPrecision());
+        $result = bccomp($this->getValue(), $candidate->getValue(), $this->getPrecision());
+
+        if ($result === 0) {
+            return true;
+        }
+
+        // check for positive/negative zero equality
+        $negatedCandidate = $candidate->multiply(new Decimal('-1'));
+
+        return 0 === bccomp($this->getValue(), $negatedCandidate->getValue(), $this->getPrecision());
     }
 
     /**
