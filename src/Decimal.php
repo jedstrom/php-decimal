@@ -103,6 +103,33 @@ class Decimal
     }
 
     /**
+     * Round using half-away from zero
+     *
+     * @param $precision
+     * @return Decimal
+     */
+    public function round($precision)
+    {
+        if (strpos($this->getValue(), '.') === false) {
+            return new Decimal($this->getValue(), $precision);
+        }
+
+        $addend = '0.' . str_repeat('0', $precision) . '5';
+
+        if (strpos($this->getValue(), '-') === 0) {
+            $addend = '-' . $addend;
+        }
+
+        $roundedValue = bcadd(
+            $this->getValue(),
+            $addend,
+            $precision
+        );
+
+        return new Decimal($roundedValue, $precision);
+    }
+
+    /**
      * @param Decimal $multiplier
      * @return Decimal
      */
