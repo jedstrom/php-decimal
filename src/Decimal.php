@@ -160,9 +160,20 @@ class Decimal
      */
     public function multiply(Decimal $multiplier)
     {
-        return new Decimal(
-            bcmul($this->getValue(), $multiplier->getValue(), $this->getPrecision()),
-            $this->getPrecision()
-        );
+        if ($this->getPrecision() === $multiplier->getPrecision()) {
+            return new Decimal(
+                bcmul($this->getValue(), $multiplier->getValue(), $this->getPrecision()),
+                $this->getPrecision()
+            );
+        }
+
+        $precision = $this->getPrecision() >= $multiplier->getPrecision()
+            ? $this->getPrecision()
+            : $multiplier->getPrecision();
+
+        $product = bcmul($this->getValue(), $multiplier->getValue(), $precision);
+        $product = new Decimal($product, $precision);
+
+        return $product->round($this->getPrecision());
     }
 }

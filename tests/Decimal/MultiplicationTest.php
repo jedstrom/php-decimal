@@ -6,17 +6,29 @@ use Jedstrom\Decimal;
 
 class MultiplicationTest extends \PHPUnit_Framework_TestCase
 {
-    public function testMultiplication()
+    public function multiplicationProvider()
     {
-        $termOne = new Decimal('2', 0);
-        $termTwo = new Decimal('3', 0);
-        $product = new Decimal('6', 0);
+        return [
+            ['2', 0, '3', 0, '6'],
+            ['2', 0, '-1', 0, '-2'],
+            ['-2', 0, '-5', 0, '10'],
+            ['7.99', 2, '0.07125', 5, '0.57'],
+        ];
+    }
 
-        $this->assertTrue($termOne->multiply($termTwo)->equals($product));
+    /**
+     * @dataProvider multiplicationProvider
+     * @param string $firstValue
+     * @param int $firstPrecision
+     * @param string $secondValue
+     * @param int $secondPrecision
+     * @param string $productValue
+     */
+    public function testMultiplication($firstValue, $firstPrecision, $secondValue, $secondPrecision, $productValue)
+    {
+        $termOne = new Decimal($firstValue, $firstPrecision);
+        $termTwo = new Decimal($secondValue, $secondPrecision);
 
-        $termTwo = new Decimal('-1');
-        $product = new Decimal('-2');
-
-        $this->assertTrue($termOne->multiply($termTwo)->equals($product));
+        $this->assertEquals($productValue, $termOne->multiply($termTwo)->getValue());
     }
 }
