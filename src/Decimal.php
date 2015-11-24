@@ -154,6 +154,25 @@ class Decimal
         return $sum->round($this->getPrecision());
     }
 
+    public function subtract(Decimal $addend)
+    {
+        if ($this->getPrecision() === $addend->getPrecision()) {
+            return new Decimal(
+                bcsub($this->getValue(), $addend->getValue(), $this->getPrecision()),
+                $this->getPrecision()
+            );
+        }
+
+        $precision = $this->getPrecision() >= $addend->getPrecision()
+            ? $this->getPrecision()
+            : $addend->getPrecision();
+
+        $difference = bcsub($this->getValue(), $addend->getValue(), $precision);
+        $difference = new Decimal($difference, $precision);
+
+        return $difference->round($this->getPrecision());
+    }
+
     /**
      * @param Decimal $multiplier
      * @return Decimal
