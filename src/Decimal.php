@@ -133,6 +133,25 @@ class Decimal
         return new Decimal($roundedValue, $precision);
     }
 
+    public function add(Decimal $addend)
+    {
+        if ($this->getPrecision() === $addend->getPrecision()) {
+            return new Decimal(
+                bcadd($this->getValue(), $addend->getValue(), $this->getPrecision()),
+                $this->getPrecision()
+            );
+        }
+
+        $precision = $this->getPrecision() >= $addend->getPrecision()
+            ? $this->getPrecision()
+            : $addend->getPrecision();
+
+        $sum = bcadd($this->getValue(), $addend->getValue(), $precision);
+        $sum = new Decimal($sum, $precision);
+
+        return $sum->round($this->getPrecision());
+    }
+
     /**
      * @param Decimal $multiplier
      * @return Decimal
