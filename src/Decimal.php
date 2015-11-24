@@ -110,6 +110,10 @@ class Decimal
      */
     public function round($precision)
     {
+        if ($precision === $this->getPrecision()) {
+            return $this;
+        }
+
         if (strpos($this->getValue(), '.') === false) {
             return new Decimal($this->getValue(), $precision);
         }

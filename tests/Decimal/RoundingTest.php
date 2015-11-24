@@ -16,6 +16,8 @@ class RoundingTest extends PHPUnit_Framework_TestCase
             'positive float, round down'  => ['0.00034', 5, '0.0003', 4],
             'negative float, round up'    => ['-0.00034', 5, '-0.0003', 4],
             'negative float, round down'  => ['-0.00035', 5, '-0.0004', 4],
+            'positive no-op'              => ['0.0035', 4, '0.0035', 4],
+            'negative no-op'              => ['-0.0035', 4, '-0.0035', 4],
         ];
     }
 
