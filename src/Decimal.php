@@ -20,7 +20,7 @@ class Decimal
 
     public function __construct($value, $precision = 0)
     {
-        $this->value     = $value;
+        $this->value     = $this->roundValueToPrecision($value, $precision);
         $this->precision = $precision;
     }
 
