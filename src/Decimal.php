@@ -110,27 +110,29 @@ class Decimal
      */
     public function round($precision)
     {
-        if ($precision === $this->getPrecision()) {
+        if ($precision === $this->getPrecision() || $this->getPrecision() === 0) {
             return $this;
         }
 
-        if (strpos($this->getValue(), '.') === false) {
-            return new Decimal($this->getValue(), $precision);
-        }
+        return new Decimal(
+            $this->roundValueToPrecision($this->getValue(), $precision),
+            $precision
+        );
+    }
 
+    private function roundValueToPrecision($value, $precision)
+    {
         $addend = '0.' . str_repeat('0', $precision) . '5';
 
-        if (strpos($this->getValue(), '-') === 0) {
+        if (strpos($value, '-') === 0) {
             $addend = '-' . $addend;
         }
 
-        $roundedValue = bcadd(
-            $this->getValue(),
+        return bcadd(
+            $value,
             $addend,
             $precision
         );
-
-        return new Decimal($roundedValue, $precision);
     }
 
     public function add(Decimal $addend)
