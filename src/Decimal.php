@@ -190,6 +190,8 @@ class Decimal
             ? $this->getPrecision()
             : $multiplier->getPrecision();
 
+        $precision++;
+
         $product = bcmul($this->getValue(), $multiplier->getValue(), $precision);
         $product = new Decimal($product, $precision);
 
@@ -212,6 +214,8 @@ class Decimal
         $precision = $this->getPrecision() >= $divisor->getPrecision()
             ? $this->getPrecision()
             : $divisor->getPrecision();
+
+        $precision++;
 
         $quotient = bcdiv($this->getValue(), $divisor->getValue(), $precision);
         $quotient = new Decimal($quotient, $precision);
