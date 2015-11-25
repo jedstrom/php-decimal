@@ -195,4 +195,27 @@ class Decimal
 
         return $product->round($this->getPrecision());
     }
+
+    /**
+     * @param Decimal $divisor
+     * @return Decimal
+     */
+    public function divide(Decimal $divisor)
+    {
+        if ($this->getPrecision() === $divisor->getPrecision()) {
+            return new Decimal(
+                bcdiv($this->getValue(), $divisor->getValue(), $this->getPrecision()),
+                $this->getPrecision()
+            );
+        }
+
+        $precision = $this->getPrecision() >= $divisor->getPrecision()
+            ? $this->getPrecision()
+            : $divisor->getPrecision();
+
+        $quotient = bcdiv($this->getValue(), $divisor->getValue(), $precision);
+        $quotient = new Decimal($quotient, $precision);
+
+        return $quotient->round($this->getPrecision());
+    }
 }
