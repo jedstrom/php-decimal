@@ -1,6 +1,7 @@
 {
     "name": "jedstrom/php-decimal",
     "description": "PHP Decimal Type implementation",
+    "version": "dev-master",
     "authors": [
         {
             "name": "Jake Edstrom",
@@ -13,6 +14,7 @@
         }
     },
     "require": {
+        "php": ">=5.5.0",
         "ext-bcmath": "*"
     },
 }
