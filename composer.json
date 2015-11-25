@@ -1,9 +1,10 @@
 {
     "name": "jedstrom/php-decimal",
     "description": "PHP Decimal Type implementation",
+    "license": "BSD-3-Clause",
     "authors": [
         {
-            "name": "Jake Edstrom",
+            "name": "Jacob Edstrom",
             "email": "jake@edstrommn.net"
         }
     ],
