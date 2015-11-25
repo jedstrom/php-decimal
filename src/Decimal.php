@@ -135,42 +135,49 @@ class Decimal
         );
     }
 
-    public function add(Decimal $addend)
+    /**
+     * @param callable $operation
+     * @param Decimal $firstTerm
+     * @param Decimal $secondTerm
+     * @return Decimal
+     */
+    private function performCalculation(callable $operation, Decimal $firstTerm, Decimal $secondTerm)
     {
-        if ($this->getPrecision() === $addend->getPrecision()) {
+        if ($firstTerm->getPrecision() === $secondTerm->getPrecision()) {
             return new Decimal(
-                bcadd($this->getValue(), $addend->getValue(), $this->getPrecision()),
-                $this->getPrecision()
+                $operation($firstTerm->getValue(), $secondTerm->getValue(), $firstTerm->getPrecision()),
+                $firstTerm->getPrecision()
             );
         }
 
-        $precision = $this->getPrecision() >= $addend->getPrecision()
-            ? $this->getPrecision()
-            : $addend->getPrecision();
+        $precision = $firstTerm->getPrecision() >= $secondTerm->getPrecision()
+            ? $firstTerm->getPrecision()
+            : $secondTerm->getPrecision();
 
-        $sum = bcadd($this->getValue(), $addend->getValue(), $precision);
-        $sum = new Decimal($sum, $precision);
+        $precision++;
 
-        return $sum->round($this->getPrecision());
+        $result = $operation($firstTerm->getValue(), $secondTerm->getValue(), $precision);
+        $result = new Decimal($result, $precision);
+
+        return $result->round($firstTerm->getPrecision());
     }
 
+    /**
+     * @param Decimal $addend
+     * @return Decimal
+     */
+    public function add(Decimal $addend)
+    {
+        return $this->performCalculation('bcadd', $this, $addend);
+    }
+
+    /**
+     * @param Decimal $subtrahend
+     * @return Decimal
+     */
     public function subtract(Decimal $subtrahend)
     {
-        if ($this->getPrecision() === $subtrahend->getPrecision()) {
-            return new Decimal(
-                bcsub($this->getValue(), $subtrahend->getValue(), $this->getPrecision()),
-                $this->getPrecision()
-            );
-        }
-
-        $precision = $this->getPrecision() >= $subtrahend->getPrecision()
-            ? $this->getPrecision()
-            : $subtrahend->getPrecision();
-
-        $difference = bcsub($this->getValue(), $subtrahend->getValue(), $precision);
-        $difference = new Decimal($difference, $precision);
-
-        return $difference->round($this->getPrecision());
+        return $this->performCalculation('bcsub', $this, $subtrahend);
     }
 
     /**
@@ -179,23 +186,7 @@ class Decimal
      */
     public function multiply(Decimal $multiplier)
     {
-        if ($this->getPrecision() === $multiplier->getPrecision()) {
-            return new Decimal(
-                bcmul($this->getValue(), $multiplier->getValue(), $this->getPrecision()),
-                $this->getPrecision()
-            );
-        }
-
-        $precision = $this->getPrecision() >= $multiplier->getPrecision()
-            ? $this->getPrecision()
-            : $multiplier->getPrecision();
-
-        $precision++;
-
-        $product = bcmul($this->getValue(), $multiplier->getValue(), $precision);
-        $product = new Decimal($product, $precision);
-
-        return $product->round($this->getPrecision());
+        return $this->performCalculation('bcmul', $this, $multiplier);
     }
 
     /**
@@ -204,22 +195,6 @@ class Decimal
      */
     public function divide(Decimal $divisor)
     {
-        if ($this->getPrecision() === $divisor->getPrecision()) {
-            return new Decimal(
-                bcdiv($this->getValue(), $divisor->getValue(), $this->getPrecision()),
-                $this->getPrecision()
-            );
-        }
-
-        $precision = $this->getPrecision() >= $divisor->getPrecision()
-            ? $this->getPrecision()
-            : $divisor->getPrecision();
-
-        $precision++;
-
-        $quotient = bcdiv($this->getValue(), $divisor->getValue(), $precision);
-        $quotient = new Decimal($quotient, $precision);
-
-        return $quotient->round($this->getPrecision());
+        return $this->performCalculation('bcdiv', $this, $divisor);
     }
 }
