@@ -24,8 +24,15 @@ class Decimal
      */
     private $precision;
 
-    public function __construct($value, $precision = 0)
+    public function __construct($value, $precision = null)
     {
+        if (is_null($precision)) {
+            $decimalIndex = strpos($value, '.');
+            $precision    = ($decimalIndex === false)
+                ? 0
+                : strlen($value) - $decimalIndex - 1;
+        }
+
         $this->value     = $this->roundValueToPrecision($value, $precision);
         $this->precision = $precision;
     }

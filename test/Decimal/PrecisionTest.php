@@ -16,6 +16,15 @@ class PrecisionTest extends PHPUnit_Framework_TestCase
         ];
     }
 
+    public function automaticPrecisionProvider()
+    {
+        return [
+            ['3.14159', 5],
+            ['1', 0],
+            ['-1.2345', 4],
+        ];
+    }
+
     /**
      * @dataProvider precisionProvider
      * @param string $value
@@ -27,5 +36,17 @@ class PrecisionTest extends PHPUnit_Framework_TestCase
         $decimal = new Decimal($value, $precision);
 
         $this->assertSame($expectedValue, $decimal->getValue());
+    }
+
+    /**
+     * @dataProvider automaticPrecisionProvider
+     * @param string $value
+     * @param int $expectedPrecision
+     */
+    public function testSetPrecisionAutomaticallyBasedOnInputValue($value, $expectedPrecision)
+    {
+        $decimal = new Decimal($value);
+
+        $this->assertEquals($expectedPrecision, $decimal->getPrecision());
     }
 }
