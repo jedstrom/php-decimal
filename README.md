@@ -7,10 +7,10 @@ A value object class that utilizes BCMath functions to perform arbitrary precisi
 
 ### Supported Operations
 The following operations are currently supported:
-1. Addition
-1. Subtraction
-1. Multiplication
-1. Division
+ 1. Addition
+ 1. Subtraction
+ 1. Multiplication
+ 1. Division
 
 __Source__
 
