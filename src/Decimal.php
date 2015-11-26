@@ -7,6 +7,7 @@
  */
 
 namespace Jedstrom;
+use InvalidArgumentException;
 
 /**
  * Class Decimal
@@ -26,6 +27,14 @@ class Decimal
 
     public function __construct($value, $precision = null)
     {
+        if (!is_string($value)) {
+            throw new InvalidArgumentException('Expected string, received "' . gettype($value) . '"');
+        }
+
+        if (!is_numeric($value)) {
+            throw new InvalidArgumentException('Invalid format, expected "-?\d+\(\.\d+)?", received "' . $value . '"');
+        }
+
         if (is_null($precision)) {
             $decimalIndex = strpos($value, '.');
             $precision    = ($decimalIndex === false)
