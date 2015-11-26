@@ -61,6 +61,16 @@ __Output__
 
     string(1) "2"
 
+__Source__
+
+    $termOne = new Decimal('-1');
+    $termTwo = new Decimal('1.5');
+    $product = $termOne->multiply($termTwo);
+    var_dump($product->getValue());
+__Output__
+
+    string(1) "-2"
+
 
 ### Precision Truncation
 If a precision is explicitly specified and the value specified requires more precision than specified, the value will be rounded to the specified precision.
