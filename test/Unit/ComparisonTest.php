@@ -7,6 +7,13 @@ use PHPUnit_Framework_TestCase;
 
 class ComparisonTest extends PHPUnit_Framework_TestCase
 {
+    public function greaterThanProvider()
+    {
+        return [
+
+        ];
+    }
+
     public function testGreaterThanComparison()
     {
         $decimal = new Decimal('5.00', 2);
