@@ -49,6 +49,14 @@ class Decimal
     /**
      * @return string
      */
+    public function __toString()
+    {
+        return $this->getValue();
+    }
+
+    /**
+     * @return string
+     */
     public function getValue()
     {
         return $this->value;
