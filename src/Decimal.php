@@ -198,9 +198,14 @@ class Decimal
     /**
      * @param Decimal $divisor
      * @return Decimal
+     * @throws DivisionByZeroException
      */
     public function divide(Decimal $divisor)
     {
+        if (bccomp($divisor->getValue(), '0', $divisor->getPrecision()) === 0) {
+            throw new DivisionByZeroException();
+        }
+
         return $this->performCalculation('bcdiv', $this, $divisor);
     }
 }

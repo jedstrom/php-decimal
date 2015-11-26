@@ -40,4 +40,15 @@ class DivisionTest extends PHPUnit_Framework_TestCase
 
         $this->assertEquals($quotientValue, $termOne->divide($termTwo)->getValue());
     }
+
+    /**
+     * @expectedException \Jedstrom\DivisionByZeroException
+     */
+    public function testDivisionByZero()
+    {
+        $termOne = new Decimal('1');
+        $termTwo = new Decimal('0');
+
+        $termOne->divide($termTwo);
+    }
 }
